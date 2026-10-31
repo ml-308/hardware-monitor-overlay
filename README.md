@@ -164,7 +164,9 @@ HardwareMonitor/
 │   ├── Util.cs             日志、单位格式化、字体缓存
 │   └── Program.cs          入口 + selftest / render / verify / shot 自检模式
 ├── installer/Setup.cs      安装 / 卸载程序（自包含，内嵌主程序）
-├── tools/MkIcon.cs         生成多尺寸 icon.ico（编译期工具）
+├── tools/
+│   ├── MkIcon.cs           生成多尺寸 icon.ico（编译期工具）
+│   └── Publish.cs          无 gh 依赖的发布器（建仓库 / 推送 / 建 Release / 传附件）
 ├── app.manifest            PerMonitorV2 DPI 感知 + asInvoker
 ├── icon.ico                程序图标
 ├── build.cmd               编译主程序
@@ -187,6 +189,31 @@ HardwareMonitor/
 
 ---
 
-## 10. 许可
+## 10. 发布到 GitHub
+
+本仓库已发布：<https://github.com/ml-308/hardware-monitor-overlay> ，
+Release：<https://github.com/ml-308/hardware-monitor-overlay/releases/tag/v1.0.0>
+
+方式一（PowerShell，无需 gh）：
+
+```powershell
+$env:GITHUB_TOKEN = "ghp_xxxxxxxx"        # 生成 Token 时勾选 repo 权限
+powershell -ExecutionPolicy Bypass -File publish.ps1 -Owner 你的用户名
+```
+
+方式二（自包含发布器 `tools/Publish.cs`，可复用本机已保存的 git 凭据）：
+
+```bat
+csc -nologo -target:exe -out:Publish.exe tools\Publish.cs
+Publish.exe --owner 你的用户名          :: 建仓库 + 推送 + Release + 上传附件
+Publish.exe --code-only                 :: 只推送代码更新
+```
+
+两种方式都会上传以下发布产物：`HardwareMonitor.exe`、`setup.exe`、
+`release/HardwareMonitor-1.0.0-portable.zip`、`release/SHA256SUMS.txt`。
+
+---
+
+## 11. 许可
 
 [MIT](LICENSE)
