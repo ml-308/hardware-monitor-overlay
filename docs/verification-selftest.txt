@@ -1,0 +1,50 @@
+HwMon selftest @ 2026-11-01 00:17:55
+CPU: Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz
+logical=8 physical=4 nominalMHz=1992
+ProcessorPerfInfo size=48
+配置路径: C:\Users\ThinkPad\AppData\Roaming\HwMon\config.ini
+日志路径: C:\Users\ThinkPad\AppData\Local\Temp\HwMon.log
+可执行文件: D:\dsh\tool\HardwareMonitor\HardwareMonitor.exe
+
+---- sample #3 ----
+CPU        : 12.9 %
+cores      : 5 / 2 / 59 / 22 / 6 / 2 / 6 / 2
+RAM        : 43.5 %  6.89 GB / 15.9 GB (avail 8.96 GB)
+GPU        : 0.0 %  (pdh=True)
+disk act   : 6.8 %
+processes  : 8   threads: 124
+network    : down 60 B/s / up 2 B/s   total 7.60 GB / 2.40 GB
+battery    : 98% ac=True
+uptime     : 9h 31m
+drive C: : 36.3 %  free 127 GB / 200 GB
+drive D: : 7.9 %  free 461 GB / 500 GB
+drive E: : 6.1 %  free 238 GB / 254 GB
+---- sample #5 ----
+CPU        : 13.1 %
+cores      : 5 / 3 / 64 / 23 / 3 / 3 / 2 / 2
+RAM        : 43.6 %  6.92 GB / 15.9 GB (avail 8.94 GB)
+GPU        : 0.0 %  (pdh=True)
+disk act   : 5.0 %
+processes  : 8   threads: 124
+network    : down 60 B/s / up 2 B/s   total 7.60 GB / 2.40 GB
+battery    : 98% ac=True
+uptime     : 9h 31m
+drive C: : 36.3 %  free 127 GB / 200 GB
+drive D: : 7.9 %  free 461 GB / 500 GB
+drive E: : 6.1 %  free 238 GB / 254 GB
+---- sample #6 ----
+CPU        : 12.7 %
+cores      : 3 / 3 / 64 / 20 / 8 / 0 / 0 / 3
+RAM        : 43.5 %  6.90 GB / 15.9 GB (avail 8.96 GB)
+GPU        : 0.0 %  (pdh=True)
+disk act   : 5.6 %
+processes  : 8   threads: 124
+network    : down 102 B/s / up 44 B/s   total 7.60 GB / 2.40 GB
+battery    : 98% ac=True
+uptime     : 9h 31m
+drive C: : 36.3 %  free 127 GB / 200 GB
+drive D: : 7.9 %  free 461 GB / 500 GB
+drive E: : 6.1 %  free 238 GB / 254 GB
+
+history ring: ok
+DONE

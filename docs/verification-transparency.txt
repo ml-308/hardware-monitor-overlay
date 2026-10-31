@@ -1,0 +1,12 @@
+载入配置 W=320 H=380 X=100 Y=100 | 赋值后 client={Width=340, Height=420} loc={X=60,Y=60} min={Width=0, Height=0} max={Width=0, Height=0}
+Show 后 client={Width=340, Height=420} loc={X=60,Y=60} min={Width=0, Height=0} max={Width=0, Height=0} dpi=96 border=None style=0x16010000 exstyle=0x00090088
+真实浮窗端到端验证 @ 00:18:11
+窗口矩形(物理): 60,60 340x420   逻辑: 60,60 340x420   客户区: 340x420
+DPI: system=120 window=120
+渲染自检: scale=1.133 usedBottom=410.9 clip=0 minShrink=1.00
+面板平均改变 : 94.2 / 255
+四角平均色差 : 6.89  阈值 < 23.5  (圆角外完全透明)
+面板亮度     : 显示后 48.1 / 隐藏后 142.3
+背景相关性   : 0.290  (>0 表示背景透过半透明面板可见)
+覆盖像素比例 : 99.1%  (窗口范围内被浮窗改变的像素)
+结论: 通过 —— 逐像素透明生效，半透明背景可见，内容未溢出窗口

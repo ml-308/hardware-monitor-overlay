@@ -1,0 +1,20 @@
+# 构建/运行产物
+*.user
+*.suo
+*.pdb
+*.ilk
+obj/
+bin/
+install-test/
+tools/MkIcon.exe
+# 临时验证输出
+selftest.txt
+verify.txt
+preview.png.txt
+shot2.png
+# 系统文件
+Thumbs.db
+desktop.ini
+HwMon.ini
+setup.log
+HwMonSetup.log
