@@ -17,7 +17,7 @@ param(
     [string]$Owner = $env:GITHUB_USER,
     [string]$Repo  = "hardware-monitor-overlay",
     [string]$Token = $env:GITHUB_TOKEN,
-    [string]$Tag   = "v1.0.0",
+    [string]$Tag   = "v1.0.1",
     [switch]$Private
 )
 
@@ -52,7 +52,7 @@ try {
 Write-Host "[2/5] 初始化本地仓库并提交 ..."
 if (-not (Test-Path ".git")) { git init | Out-Null }
 git add -A
-git -c user.name="HwMon" -c user.email="hwmon@users.noreply.github.com" commit -m "release: v1.0.0 - 轻量硬件利用率浮窗（透明/可拖动/可缩放）" 2>$null | Out-Null
+git -c user.name="HwMon" -c user.email="hwmon@users.noreply.github.com" commit -m "release: v1.0.1 - 代码签名（彻底消除 SmartScreen 拦截）" 2>$null | Out-Null
 git branch -M main
 
 Write-Host "[3/5] 推送代码与标签 ..."

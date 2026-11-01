@@ -1,3 +1,19 @@
+# v1.0.1 — 代码签名（彻底消除 SmartScreen 拦截）
+
+## 变更
+* 接入 Authenticode 代码签名流程：`sign.ps1` 在 `build.cmd` / `build-all.cmd` 编译后自动对
+  `HardwareMonitor.exe` 与 `setup.exe` 签名（SHA256 + RFC3161 时间戳）。
+* 删除以往"关闭 SmartScreen"或"绕开外壳检查"的临时做法——代码签名才是 Windows 官方认可、
+  对所有用户生效的彻底解法，且**不改动任何系统安全设置**。
+* 发布产物（`HardwareMonitor.exe` / `setup.exe` / 便携 zip）均带数字签名；`SHA256SUMS.txt` 已更新。
+
+## 注意
+* 要让下载你程序的其他人**不再**看到 SmartScreen 提示，签名证书必须来自受公众信任的 CA
+  （**EV 证书**即时生效，**OV/IV 证书**在积累下载量后生效）。仓库提供的二进制使用自签名开发
+  证书签名仅用于验证流程；正式发布前请按 `sign.ps1` 说明替换为你的 CA 证书后重新构建。
+
+---
+
 # v1.0.0 — 首个版本
 
 ## 亮点

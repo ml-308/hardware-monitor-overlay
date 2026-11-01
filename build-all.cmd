@@ -22,12 +22,18 @@ echo [2/5] Compile HardwareMonitor.exe ...
   -r:System.dll -r:System.Drawing.dll -r:System.Windows.Forms.dll ^
   "src\Native.cs" "src\Util.cs" "src\Settings.cs" "src\Sampler.cs" "src\Renderer.cs" "src\OverlayForm.cs" "src\Program.cs" || exit /b 1
 
+rem === 代码签名：主程序（未配置证书时自动跳过） ===
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0sign.ps1" -Path "%~dp0HardwareMonitor.exe"
+
 echo [3/5] Compile setup.exe ...
 "%CSC%" -nologo -target:winexe -optimize+ ^
   -out:"setup.exe" -win32manifest:"app.manifest" -win32icon:"icon.ico" ^
   -resource:HardwareMonitor.exe,HwMonPayload.exe ^
   -r:System.dll -r:System.Drawing.dll -r:System.Windows.Forms.dll ^
   "installer\Setup.cs" || exit /b 1
+
+rem === 代码签名：安装程序（内嵌已签名的主程序） ===
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0sign.ps1" -Path "%~dp0setup.exe"
 
 echo [4/5] Generate docs (preview + selftest report) ...
 if not exist "docs" mkdir "docs"

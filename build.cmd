@@ -24,5 +24,8 @@ echo [2/2] Compile HardwareMonitor.exe ...
   "src\Native.cs" "src\Util.cs" "src\Settings.cs" "src\Sampler.cs" "src\Renderer.cs" "src\OverlayForm.cs" "src\Program.cs"
 if errorlevel 1 exit /b 1
 
+rem === 代码签名：彻底消除 SmartScreen「无法识别的应用」（未配置证书时自动跳过） ===
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0sign.ps1" -Path "%~dp0HardwareMonitor.exe"
+
 echo Done: %~dp0HardwareMonitor.exe
 endlocal

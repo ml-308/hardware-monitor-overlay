@@ -133,6 +133,14 @@ build.cmd        :: 编译主程序 HardwareMonitor.exe
 build-all.cmd    :: 编译主程序 + setup.exe + 便携 zip + SHA256 校验文件
 ```
 
+> **代码签名（彻底消除 SmartScreen「无法识别的应用」）**：`build.cmd` / `build-all.cmd`
+> 编译完成后会自动调用 `sign.ps1` 进行 Authenticode 签名。未提供证书时自动跳过，
+> 行为与改动前一致。要让最终用户机器不再弹窗，需在构建机上准备一个**受公众信任 CA 颁发的
+> 代码签名证书**（**EV 证书**即时生效，**OV/IV 证书**在积累下载量后生效），并通过
+> `CODESIGN_PFX` / `CODESIGN_PASSWORD` 环境变量（或 `-Thumbprint`）提供给 `sign.ps1`。
+> 详见 `sign.ps1` 文件头注释。
+```
+
 手动编译等价命令：
 
 ```bat
