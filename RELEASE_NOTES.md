@@ -1,3 +1,25 @@
+# v1.1.0 — 统一安装程序（Inno Setup 6）
+
+## 变更
+* 安装程序整体重做：改用 **Inno Setup 6** 的现代向导，与项目内其它应用保持同一套安装体验。
+* 页面顺序固定为 7 步：**欢迎 → 许可协议 → 安装位置 → 附加任务 → 准备安装 → 安装进度 → 完成**。
+* 统一选项：安装位置可改（默认 `%LOCALAPPDATA%\Programs\HardwareMonitor`，无需管理员权限）、
+  桌面快捷方式、开始菜单快捷方式、**登录时自动启动**（常驻型工具特有）、完成页「立即运行」。
+* 界面简体中文，系统语言非中文时自动 English（`installer/ChineseSimplified.isl`）。
+* 目录页增加保护：路径不可创建时给出具体原因；目标目录已有其它文件时先确认再覆盖。
+* 静默安装改走 Inno 标准参数：`/VERYSILENT /SUPPRESSMSGBOXES /TASKS="desktopicon,startmenuicon,autostart"`。
+* 卸载统一为 `unins000.exe`（控制面板「已安装的应用」同步登记）。
+
+## 升级
+* 沿用原 `AppId` 与安装目录，可直接覆盖安装 1.0.x；安装完成后自动删除旧版 `uninstall.exe`
+  与旧卸载注册项，不会在「已安装的应用」里留下两条记录。
+
+## 产物
+* `HardwareMonitor-Setup-1.1.0.exe` — 安装包（新增）
+* `HardwareMonitor.exe` / `HardwareMonitor-1.0.0-portable.zip` / `SHA256SUMS.txt` — 与上版一致
+
+---
+
 # v1.0.1 — 代码签名（彻底消除 SmartScreen 拦截）
 
 ## 变更
