@@ -71,7 +71,7 @@ $release = Invoke-RestMethod -Method Post -Headers $headers -Uri "https://api.gi
 Write-Host "      Release: $($release.html_url)"
 
 Write-Host "[5/5] 上传发布产物 ..."
-$files = @("HardwareMonitor.exe", "setup.exe", "release\HardwareMonitor-1.0.0-portable.zip", "release\SHA256SUMS.txt")
+$files = @("HardwareMonitor.exe", "dist\HardwareMonitor-Setup-1.1.0.exe", "release\HardwareMonitor-1.0.0-portable.zip", "release\SHA256SUMS.txt")
 foreach ($f in $files) {
     if (-not (Test-Path $f)) { Write-Host "      跳过（不存在）: $f" -ForegroundColor Yellow; continue }
     $name = Split-Path $f -Leaf

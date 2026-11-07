@@ -53,19 +53,29 @@
 直接双击 `HardwareMonitor.exe`，无需安装。
 
 ### 方式 B：安装程序
-双击 `setup.exe`：
+双击 `HardwareMonitor-Setup-1.1.0.exe`（Inno Setup 6 构建的向导式安装包）：
 
-* 安装到 `%LOCALAPPDATA%\Programs\HardwareMonitor`（当前用户，**不需要管理员权限**）
-* 可选创建桌面快捷方式、可选开机自动启动
-* 注册标准卸载项（设置 → 应用 → 硬件监控浮窗 → 卸载）
-* 卸载器为安装目录下的 `uninstall.exe`，会一并清理快捷方式与注册表项
+1. **欢迎** → 2. **许可协议**（MIT）→ 3. **安装位置** → 4. **附加任务** → 5. **准备安装** → 6. **安装进度** → 7. **完成**
+   （多语言界面：简体中文 / English 自动匹配系统语言）
+
+默认情况：
+
+* 安装到 `%LOCALAPPDATA%\Programs\HardwareMonitor`（当前用户，**不需要管理员权限**，路径可改）
+* 快捷方式：桌面 ✔ / 开始菜单 ✔（可在「附加任务」页取消）
+* 开机自动启动：本程序是常驻型工具，安装向导提供「登录时自动启动」选项（默认不勾）
+* 完成页可直接勾选「立即运行」
+* 卸载：设置 → 应用 → 已安装的应用 → 硬件监控浮窗 → 卸载（或安装目录下的 `unins000.exe`）
 
 命令行（静默安装，可用于脚本分发）：
 
 ```bat
-setup.exe --silent --dir "D:\Tools\HardwareMonitor" --no-shortcuts
-setup.exe --uninstall --silent
+HardwareMonitor-Setup-1.1.0.exe /VERYSILENT /SUPPRESSMSGBOXES /DIR="D:\Tools\HardwareMonitor" /TASKS="desktopicon"
+HardwareMonitor-Setup-1.1.0.exe /VERYSILENT /SUPPRESSMSGBOXES /DIR="D:\Tools\HardwareMonitor" /TASKS="desktopicon,startmenuicon,autostart"
+"%LOCALAPPDATA%\Programs\HardwareMonitor\unins000.exe" /VERYSILENT
 ```
+
+> 从 1.0.x 的自绘安装器升级：安装包沿用同一 `AppId` 与同一安装目录，装完会自动删除
+> 旧版的 `uninstall.exe` 与旧卸载注册项，不会在「已安装的应用」里留下两条记录。
 
 ---
 
@@ -151,10 +161,12 @@ csc -target:winexe -optimize+ -out:..\HardwareMonitor.exe ^
     Native.cs Util.cs Settings.cs Sampler.cs Renderer.cs OverlayForm.cs Program.cs
 
 cd ..\installer
-csc -target:winexe -optimize+ -out:..\setup.exe ^
-    -win32manifest:..\app.manifest -win32icon:..\icon.ico ^
-    -resource:..\HardwareMonitor.exe,HwMonPayload.exe ^
-    -r:System.dll -r:System.Drawing.dll -r:System.Windows.Forms.dll Setup.cs
+```
+
+安装包单独重编（需要 [Inno Setup 6](https://jrsoftware.org/isdl.php)，`winget install --id JRSoftware.InnoSetup`）：
+
+```bat
+build-setup.cmd   :: 产物 dist\HardwareMonitor-Setup-1.1.0.exe
 ```
 
 ---
@@ -171,7 +183,11 @@ HardwareMonitor/
 │   ├── Settings.cs         ini 配置读写（含便携回退）与开机自启
 │   ├── Util.cs             日志、单位格式化、字体缓存
 │   └── Program.cs          入口 + selftest / render / verify / shot 自检模式
-├── installer/Setup.cs      安装 / 卸载程序（自包含，内嵌主程序）
+├── installer/               安装程序（Inno Setup 6）
+│   ├── setup.iss           应用身份与文件清单（按应用唯一要改的文件）
+│   ├── common.iss          统一向导：页面顺序、任务项、文案、卸载行为
+│   ├── ChineseSimplified.isl  简体中文语言包
+│   └── assets/wizard-small.png 向导头图（由 icon.ico 生成）
 ├── tools/
 │   ├── MkIcon.cs           生成多尺寸 icon.ico（编译期工具）
 │   └── Publish.cs          无 gh 依赖的发布器（建仓库 / 推送 / 建 Release / 传附件）
@@ -179,11 +195,12 @@ HardwareMonitor/
 ├── icon.ico                程序图标
 ├── build.cmd               编译主程序
 ├── build-all.cmd           全量构建（主程序 + 安装包 + 发布包 + 校验）
+├── build-setup.cmd         只重编安装包
 ├── publish.ps1             一键发布到 GitHub（建仓库 + 推送 + 建 Release + 传附件）
 ├── docs/                   预览图与验证报告
 ├── release/                发布产物（便携 zip + SHA256SUMS.txt）
 ├── HardwareMonitor.exe     主程序
-└── setup.exe               安装程序
+└── dist/                   安装包产物（不入库，随 Release 分发）
 ```
 
 ---

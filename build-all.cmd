@@ -1,7 +1,7 @@
 @echo off
 rem ==========================================================
 rem  Hardware Monitor Overlay - full build
-rem  main exe + setup.exe + portable zip + SHA256SUMS.txt
+rem  main exe + installer (Inno Setup 6) + portable zip + SHA256SUMS.txt
 rem ==========================================================
 setlocal
 cd /d "%~dp0"
@@ -22,18 +22,14 @@ echo [2/5] Compile HardwareMonitor.exe ...
   -r:System.dll -r:System.Drawing.dll -r:System.Windows.Forms.dll ^
   "src\Native.cs" "src\Util.cs" "src\Settings.cs" "src\Sampler.cs" "src\Renderer.cs" "src\OverlayForm.cs" "src\Program.cs" || exit /b 1
 
-rem === 代码签名：主程序（未配置证书时自动跳过） ===
+rem === code signing: main program (skipped when no certificate is configured) ===
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0sign.ps1" -Path "%~dp0HardwareMonitor.exe"
 
-echo [3/5] Compile setup.exe ...
-"%CSC%" -nologo -target:winexe -optimize+ ^
-  -out:"setup.exe" -win32manifest:"app.manifest" -win32icon:"icon.ico" ^
-  -resource:HardwareMonitor.exe,HwMonPayload.exe ^
-  -r:System.dll -r:System.Drawing.dll -r:System.Windows.Forms.dll ^
-  "installer\Setup.cs" || exit /b 1
+echo [3/5] Build installer (Inno Setup 6) ...
+call "%~dp0build-setup.cmd" || exit /b 1
 
-rem === 代码签名：安装程序（内嵌已签名的主程序） ===
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0sign.ps1" -Path "%~dp0setup.exe"
+rem === code signing: installer (contains the signed main program) ===
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0sign.ps1" -Path "%~dp0dist\HardwareMonitor-Setup-1.1.0.exe"
 
 echo [4/5] Generate docs (preview + selftest report) ...
 if not exist "docs" mkdir "docs"
@@ -44,10 +40,11 @@ echo [5/5] Package release ...
 if not exist "release" mkdir "release"
 del /q "release\*.zip" "release\SHA256SUMS.txt" 2>nul
 powershell -NoProfile -Command "Compress-Archive -Path 'HardwareMonitor.exe','README.md','LICENSE','RELEASE_NOTES.md' -DestinationPath 'release\HardwareMonitor-1.0.0-portable.zip' -Force"
-powershell -NoProfile -Command "$o=@(); foreach($x in @('HardwareMonitor.exe','setup.exe','release\HardwareMonitor-1.0.0-portable.zip')){ $o += ((Get-FileHash $x -Algorithm SHA256).Hash.ToLower() + '  ' + (Split-Path $x -Leaf)) }; $o | Set-Content -Encoding ascii 'release\SHA256SUMS.txt'"
+powershell -NoProfile -Command "$o=@(); foreach($x in @('HardwareMonitor.exe','dist\HardwareMonitor-Setup-1.1.0.exe','release\HardwareMonitor-1.0.0-portable.zip')){ $o += ((Get-FileHash $x -Algorithm SHA256).Hash.ToLower() + '  ' + (Split-Path $x -Leaf)) }; $o | Set-Content -Encoding ascii 'release\SHA256SUMS.txt'"
 
 echo.
 echo Build complete:
-dir /b "HardwareMonitor.exe" "setup.exe"
+dir /b "HardwareMonitor.exe"
+dir /b "dist"
 dir /b "release"
 endlocal

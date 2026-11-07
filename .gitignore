@@ -1,4 +1,5 @@
 # 构建/运行产物
+dist/
 *.user
 *.suo
 *.pdb
