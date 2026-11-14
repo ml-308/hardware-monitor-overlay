@@ -1,11 +1,11 @@
 ﻿; 硬件监控浮窗 · 安装程序（Inno Setup 6）
 ; 页面结构与选项由 common.iss 统一提供；这里只声明应用身份与要安装的文件。
-; 构建：installer\build-setup.cmd   产物：dist\HardwareMonitor-Setup-1.1.0.exe
+; 构建：installer\build-setup.cmd   产物：dist\HardwareMonitor-Setup-1.2.0.exe
 
 #define AppName "硬件监控浮窗"
 #define AppSlug "HardwareMonitor"
 #define DirName "HardwareMonitor"
-#define AppVersion "1.1.0"
+#define AppVersion "1.2.0"
 #define AppId "{{7A1C4E20-9B3D-4E58-8C71-2F6A9D5B4C13}"
 #define AppExe "HardwareMonitor.exe"
 #define AppRepo "hardware-monitor-overlay"

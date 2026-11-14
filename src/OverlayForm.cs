@@ -425,6 +425,11 @@ namespace HwMon
             ContextMenuStrip m = new ContextMenuStrip();
             m.ShowImageMargin = false;
 
+            ToolStripMenuItem update = new ToolStripMenuItem("检查更新…");
+            update.Click += delegate { UpdateKit.UpdatePrompt.CheckNow(this); };
+            m.Items.Add(update);
+            m.Items.Add(new ToolStripSeparator());
+
             ToolStripMenuItem top = new ToolStripMenuItem("窗口置顶");
             top.Checked = _set.TopMost;
             top.Click += delegate { _set.TopMost = !_set.TopMost; TopMost = _set.TopMost; _set.Save(); };

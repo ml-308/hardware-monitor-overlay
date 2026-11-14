@@ -53,7 +53,7 @@
 直接双击 `HardwareMonitor.exe`，无需安装。
 
 ### 方式 B：安装程序
-双击 `HardwareMonitor-Setup-1.1.0.exe`（Inno Setup 6 构建的向导式安装包）：
+双击 `HardwareMonitor-Setup-1.2.0.exe`（Inno Setup 6 构建的向导式安装包）：
 
 1. **欢迎** → 2. **许可协议**（MIT）→ 3. **安装位置** → 4. **附加任务** → 5. **准备安装** → 6. **安装进度** → 7. **完成**
    （多语言界面：简体中文 / English 自动匹配系统语言）
@@ -69,8 +69,8 @@
 命令行（静默安装，可用于脚本分发）：
 
 ```bat
-HardwareMonitor-Setup-1.1.0.exe /VERYSILENT /SUPPRESSMSGBOXES /DIR="D:\Tools\HardwareMonitor" /TASKS="desktopicon"
-HardwareMonitor-Setup-1.1.0.exe /VERYSILENT /SUPPRESSMSGBOXES /DIR="D:\Tools\HardwareMonitor" /TASKS="desktopicon,startmenuicon,autostart"
+HardwareMonitor-Setup-1.2.0.exe /VERYSILENT /SUPPRESSMSGBOXES /DIR="D:\Tools\HardwareMonitor" /TASKS="desktopicon"
+HardwareMonitor-Setup-1.2.0.exe /VERYSILENT /SUPPRESSMSGBOXES /DIR="D:\Tools\HardwareMonitor" /TASKS="desktopicon,startmenuicon,autostart"
 "%LOCALAPPDATA%\Programs\HardwareMonitor\unins000.exe" /VERYSILENT
 ```
 
@@ -166,7 +166,7 @@ cd ..\installer
 安装包单独重编（需要 [Inno Setup 6](https://jrsoftware.org/isdl.php)，`winget install --id JRSoftware.InnoSetup`）：
 
 ```bat
-build-setup.cmd   :: 产物 dist\HardwareMonitor-Setup-1.1.0.exe
+build-setup.cmd   :: 产物 dist\HardwareMonitor-Setup-1.2.0.exe
 ```
 
 ---

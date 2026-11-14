@@ -18,6 +18,12 @@ namespace HwMon
             {
                 MachineInfo.Probe();
                 string mode = args.Length > 0 ? args[0].ToLowerInvariant() : "";
+
+                // 「发现新版本」检查：命令行开关 + 无人值守 probe
+                UpdateKit.UpdateCheck.Configure(args);
+                int? probeExit = UpdateKit.UpdateCheck.TryProbe(args);
+                if (probeExit.HasValue) { Environment.ExitCode = probeExit.Value; return; }
+
                 if (mode == "--selftest") { SelfTest(args); return; }
                 if (mode == "--render") { RenderPreview(args); return; }
                 if (mode == "--shot") { Shot(args); return; }
@@ -34,6 +40,7 @@ namespace HwMon
                 sampler.Start();
 
                 OverlayForm form = new OverlayForm(set, sampler);
+                UpdateKit.UpdatePrompt.ScheduleAutoCheck(form);
                 Application.Run(form);
                 sampler.Dispose();
             }

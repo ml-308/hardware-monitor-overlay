@@ -29,7 +29,7 @@ echo [3/5] Build installer (Inno Setup 6) ...
 call "%~dp0build-setup.cmd" || exit /b 1
 
 rem === code signing: installer (contains the signed main program) ===
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0sign.ps1" -Path "%~dp0dist\HardwareMonitor-Setup-1.1.0.exe"
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0sign.ps1" -Path "%~dp0dist\HardwareMonitor-Setup-1.2.0.exe"
 
 echo [4/5] Generate docs (preview + selftest report) ...
 if not exist "docs" mkdir "docs"
@@ -39,8 +39,8 @@ if not exist "docs" mkdir "docs"
 echo [5/5] Package release ...
 if not exist "release" mkdir "release"
 del /q "release\*.zip" "release\SHA256SUMS.txt" 2>nul
-powershell -NoProfile -Command "Compress-Archive -Path 'HardwareMonitor.exe','README.md','LICENSE','RELEASE_NOTES.md' -DestinationPath 'release\HardwareMonitor-1.0.0-portable.zip' -Force"
-powershell -NoProfile -Command "$o=@(); foreach($x in @('HardwareMonitor.exe','dist\HardwareMonitor-Setup-1.1.0.exe','release\HardwareMonitor-1.0.0-portable.zip')){ $o += ((Get-FileHash $x -Algorithm SHA256).Hash.ToLower() + '  ' + (Split-Path $x -Leaf)) }; $o | Set-Content -Encoding ascii 'release\SHA256SUMS.txt'"
+powershell -NoProfile -Command "Compress-Archive -Path 'HardwareMonitor.exe','README.md','LICENSE','RELEASE_NOTES.md' -DestinationPath 'release\HardwareMonitor-1.2.0-portable.zip' -Force"
+powershell -NoProfile -Command "$o=@(); foreach($x in @('HardwareMonitor.exe','dist\HardwareMonitor-Setup-1.2.0.exe','release\HardwareMonitor-1.2.0-portable.zip')){ $o += ((Get-FileHash $x -Algorithm SHA256).Hash.ToLower() + '  ' + (Split-Path $x -Leaf)) }; $o | Set-Content -Encoding ascii 'release\SHA256SUMS.txt'"
 
 echo.
 echo Build complete:

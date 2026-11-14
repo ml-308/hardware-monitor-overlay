@@ -21,7 +21,8 @@ echo [2/2] Compile HardwareMonitor.exe ...
 "%CSC%" -nologo -target:winexe -optimize+ ^
   -out:"HardwareMonitor.exe" -win32manifest:"app.manifest" -win32icon:"icon.ico" ^
   -r:System.dll -r:System.Drawing.dll -r:System.Windows.Forms.dll ^
-  "src\Native.cs" "src\Util.cs" "src\Settings.cs" "src\Sampler.cs" "src\Renderer.cs" "src\OverlayForm.cs" "src\Program.cs"
+  "src\Native.cs" "src\Util.cs" "src\Settings.cs" "src\Sampler.cs" "src\Renderer.cs" "src\OverlayForm.cs" "src\Program.cs" ^
+  "src\UpdateCheck.cs" "src\UpdatePrompt.WinForms.cs"
 if errorlevel 1 exit /b 1
 
 rem === 代码签名：彻底消除 SmartScreen「无法识别的应用」（未配置证书时自动跳过） ===
